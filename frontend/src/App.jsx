@@ -167,7 +167,7 @@ function App() {
         </div>
       </div>
       <footer className="mt-8 text-gray-500 text-center">
-        Made with ❤️ by Atul Dwivedi
+        Made with ❤️ 
       </footer>
     </div>
   );
