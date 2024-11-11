@@ -26,16 +26,14 @@ function App() {
   );
 
   const handleAddTodo = () => {
-    if (todos.length < 5) {
+   
       if (taskInput.trim() === '') {
         alert('Please enter a task.');
         return;
       }
       dispatch(addTodo(taskInput));
       setTaskInput('');
-    } else {
-      alert('You can only add 5 todos per day.');
-    }
+
   };
 
   const handleUpdateTodo = (e, id) => {
@@ -58,7 +56,7 @@ function App() {
             Not your average Todo App
           </h1>
           <p className="flex flex-col items-center text-gray-600 mb-6">
-            You can only make 5 todos per day. No need to delete todos; they will be deleted the next day automatically.
+          No need to delete todos; they will be deleted the next day automatically.
           </p>
 
           <div className="mb-6">

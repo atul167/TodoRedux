@@ -36,7 +36,7 @@ const todoSlice = createSlice({
   initialState,
   reducers: {
     addTodo: (state, action) => {
-      if (state.length < 5) {
+   
         const newTodo = {
           id: Date.now(),
           todo: action.payload,
@@ -44,7 +44,7 @@ const todoSlice = createSlice({
         };
         state.push(newTodo);
         saveTodos(state);
-      }
+      
     },
     updateTodo: (state, action) => {
       const { id, ...updates } = action.payload;
