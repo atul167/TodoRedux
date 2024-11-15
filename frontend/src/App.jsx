@@ -1,11 +1,12 @@
 // src/App.js
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import dayjs from 'dayjs'
 import './index.css';
 
 import { addTodo, updateTodo, clearTodo } from './features/TodoSlice';
 import { PlusCircle, CheckCircle, XCircle, Trash2 } from 'lucide-react';
-
+import { daysofweek, getDateToday, dayPosition } from './utils/timer';
 function App() {
   const todos = useSelector((state) => state.todos);
   const dispatch = useDispatch();
@@ -26,13 +27,13 @@ function App() {
   );
 
   const handleAddTodo = () => {
-   
-      if (taskInput.trim() === '') {
-        alert('Please enter a task.');
-        return;
-      }
-      dispatch(addTodo(taskInput));
-      setTaskInput('');
+
+    if (taskInput.trim() === '') {
+      alert('Please enter a task.');
+      return;
+    }
+    dispatch(addTodo(taskInput));
+    setTaskInput('');
 
   };
 
@@ -56,9 +57,21 @@ function App() {
             Not your average Todo App
           </h1>
           <p className="flex flex-col items-center text-gray-600 mb-6">
-          No need to delete todos; they will be deleted the next day automatically.
+            No need to delete todos; they will be deleted the next day automatically.
           </p>
 
+          <p className='flex justify-center items-center text-gray-600 mb-1 '>Today is {daysofweek()}</p>
+          <p className='flex justify-center items-center text-gray-600 mb-1'>{getDateToday()}</p>
+          <div className='flex flex-col justify-center text-nowrap items-center text-black leading-5 mt-5'>
+            <span>{dayPosition().daysLeft} days left in {dayjs().format('YYYY')}</span>
+            <span>{dayPosition().percentageComplete}% of year complete</span>
+            <div className="w-full bg-gray-200 rounded-full h-2 m-3">
+              <div
+                className="bg-gradient-to-r from-blue-200 to-blue-700 h-3 rounded-full"
+                style={{ width: `${dayPosition().percentageComplete}%` }}
+              ></div>
+            </div>
+          </div>
           <div className="mb-6">
             <div className="flex justify-between text-sm text-gray-600 mb-1">
               <span>Tasks Completed</span>
@@ -93,18 +106,16 @@ function App() {
             {todos.map((todo) => (
               <div
                 key={todo.id}
-                className={`rounded-lg p-4 transition-all ${
-                  todo.completed ? 'bg-green-50' : 'bg-red-50'
-                }`}
+                className={`rounded-lg p-4 transition-all ${todo.completed ? 'bg-green-50' : 'bg-red-50'
+                  }`}
               >
                 <div className="flex items-center gap-4">
                   <button
                     onClick={() => handleToggleCompleted(todo.id)}
-                    className={`p-1 rounded-full transition-colors ${
-                      todo.completed
+                    className={`p-1 rounded-full transition-colors ${todo.completed
                         ? 'text-green-500 hover:bg-green-100'
                         : 'text-red-500 hover:bg-red-100'
-                    }`}
+                      }`}
                   >
                     {todo.completed ? (
                       <CheckCircle className="w-6 h-6" />
@@ -117,20 +128,18 @@ function App() {
                     type="text"
                     value={todo.todo}
                     onChange={(e) => handleUpdateTodo(e, todo.id)}
-                    className={`flex-1 bg-transparent border-b-2 px-2 py-1 h-8 ${
-                      todo.completed
+                    className={`flex-1 bg-transparent border-b-2 px-2 py-1 h-8 ${todo.completed
                         ? 'border-green-200'
                         : 'border-red-200'
-                    }`}
+                      }`}
                   />
 
                   <button
                     onClick={() => handleToggleCompleted(todo.id)}
-                    className={`px-3 py-1 rounded-lg text-sm ${
-                      todo.completed
+                    className={`px-3 py-1 rounded-lg text-sm ${todo.completed
                         ? 'bg-green-100 text-green-700 hover:bg-green-200'
                         : 'bg-red-100 text-red-700 hover:bg-red-200'
-                    }`}
+                      }`}
                   >
                     {todo.completed ? 'Mark Incomplete' : 'Mark Complete'}
                   </button>
@@ -165,7 +174,7 @@ function App() {
         </div>
       </div>
       <footer className="mt-8 text-gray-500 text-center">
-        Made with ❤️ 
+        Made with ❤️
       </footer>
     </div>
   );
